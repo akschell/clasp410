@@ -396,43 +396,145 @@ def q3_plotphase():
     plt.ylabel('N2 (predator)')
 
 def q3_plotinit():
+    '''
+    This plot follows the same logic as q2_plot1, where the N1_init values are
+    being looped from 0 to 1. Rather than manually replotting for different
+    N2_init values, the N2_init value is held constant at an equilibrium value.
+    
+    The reverse is true for q3_plotinit2(), where instead the N1_init value is
+    held constant and N2_init is being looped.
+    '''
     #Create ranges of values
     N1_init = np.arange(0,1,0.1)
     for i in N1_init:
-        ct, cN1, cN2 = euler_solve(dNdt_comp, N1_init = i, N2_init = 0.6, dT = 1)
-        crk8t, crk8N1, crk8N2 = solve_rk8(dNdt_comp, N1_init = i, N2_init = 0.6, dt = 1)
+        crk8t, crk8N1, crk8N2 = solve_rk8(predpray, N1_init = i, N2_init = 0.6, dt = 1)
         
         fig, ax = plt.subplots(1,1)
         
-        plt.plot(ct, cN1, label = 'N1 (Euler)', color = 'b')
-        plt.plot(ct, cN2, label = 'N2 (Euler)', color = 'r')
         plt.plot(crk8t, crk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
         plt.plot(crk8t, crk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
     
-    ax.legend(loc = 'best')
-    plt.title('Lotka-Volterra Competition Model')
-    plt.xlabel('Time (years)')
-    plt.ylabel('Population/Carrying Capacity')
+        ax.legend(loc = 'best')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
     plt.show()
+
+def q3_plotinit2():
+    '''
+    See q3_plotinit() docstring.
+    '''
+    #create ranges of values, vary N2_init
+    N2_init = np.arange(0,1,0.1)
+    for i in N2_init:
+        crk8t, crk8N1, crk8N2 = solve_rk8(predpray, N1_init = 0.3, N2_init = i, dt = 1)
+        
+        fig, ax = plt.subplots(1,1)
+        
+        #plt.plot(ct, cN1, label = 'N1 (Euler)', color = 'b')
+        #plt.plot(ct, cN2, label = 'N2 (Euler)', color = 'r')
+        plt.plot(crk8t, crk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
+        plt.plot(crk8t, crk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
     
+        ax.legend(loc = 'best')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
+    plt.show()
+
 def q3_plotcoeffa():
+    '''
+    This function focuses on the predator-prey equations from Question 3.
+    This time, rather than looking at initial conditions, the coefficient
+    values are being individually tested. Thus, the "q3_plotcoeffa", 
+    "q3_plotcoeffb", "q3_plotcoeffc", and "q3_plotcoeffd" all follow the 
+    same format, where the last letter indicates the coefficient that is being 
+    tested.
+    
+    These functions follow the same logic as the q2_plota() function, but the 
+    Euler solver is omitted to prevent a scalar overflow.
+    '''
     #looping through different values of a
     a = np.arange(0,5,1)
     
     for i in a:
-        t, N1, N2 = euler_solve(predpray, dT = 0.05, a=i)
         rk8t, rk8N1, rk8N2 = solve_rk8(predpray, dt = 1, a=i)
         
         fig, ax = plt.subplots(1,1)
         
-        plt.plot(t, N1, label = 'N1 (Euler)', color = 'b')
-        plt.plot(t, N2, label = 'N2 (Euler)', color = 'r')
+        
         plt.plot(rk8t, rk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
         plt.plot(rk8t, rk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
         
         ax.legend(loc = 'best')
-    plt.title('Lotka-Volterra Competition Model')
-    plt.xlabel('Time (years)')
-    plt.ylabel('Population/Carrying Capacity')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
     plt.show()
     
+def q3_plotcoeffb():
+    '''
+    See q3_plotcoeffa().
+    '''
+    #looping through different values of b
+    b = np.arange(0,5,1)
+    
+    for i in b:
+        rk8t, rk8N1, rk8N2 = solve_rk8(predpray, dt = 1, b=i)
+        
+        fig, ax = plt.subplots(1,1)
+        
+        
+        plt.plot(rk8t, rk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
+        plt.plot(rk8t, rk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
+        
+        ax.legend(loc = 'best')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
+    plt.show()
+
+def q3_plotcoeffc():
+    '''
+    See q3_plotcoeffa().
+    '''
+    #looping through different values of c
+    c = np.arange(0,5,1)
+    
+    for i in c:
+        rk8t, rk8N1, rk8N2 = solve_rk8(predpray, dt = 1, c=i)
+        
+        fig, ax = plt.subplots(1,1)
+        
+        
+        plt.plot(rk8t, rk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
+        plt.plot(rk8t, rk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
+        
+        ax.legend(loc = 'best')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
+    plt.show()
+    
+def q3_plotcoeffd():
+    '''
+    See q3_plotcoeffa().
+    '''
+    #looping through different values of d
+    d = np.arange(0,5,1)
+    
+    for i in d:
+        rk8t, rk8N1, rk8N2 = solve_rk8(predpray, dt = 1, d=i)
+        
+        fig, ax = plt.subplots(1,1)
+        
+        
+        plt.plot(rk8t, rk8N1, label = 'N1 (RK8)', color = 'b', ls = '--')
+        plt.plot(rk8t, rk8N2, label = 'N2 (RK8)', color = 'r', ls = '--')
+        
+        ax.legend(loc = 'best')
+        plt.title('Lotka-Volterra Competition Model')
+        plt.xlabel('Time (years)')
+        plt.ylabel('Population/Carrying Capacity')
+    plt.show()
+
