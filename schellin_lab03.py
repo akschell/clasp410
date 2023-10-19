@@ -112,6 +112,7 @@ def q3exp1():
     plt.xlabel('Emissivity')
     plt.ylabel('Surface Temperature (K)')
     plt.show()
+    
 
 def q3exp2():
     '''
@@ -147,17 +148,29 @@ def q3exp2():
     plt.xlabel('Temperature (K)')
     plt.ylabel('Altitude (by layer)')
     plt.show()
+    
 
 def q4exp():
     '''
     This is a helper function to create a plot to answer Question 4-- how many 
     atmospheric layers (using the energybal model) would be expected on the
-    planet Venus?
+    planet Venus? An So value of 2600 W/m^2 is used, and an emissivity of 1.0
+    is assumed.
     
-    See the 'q3exp2' docstring. This is essentially the same code, but using
-    different So (insolation) and e (emissivity) values. The other difference
-    is that only the first index of the temperature array is plotted because
-    we are only looking at the surface temperature.
+    An empty array of zeros (temps) is created to hold the results for plotting 
+    purposes. A different empty array (surf_Ts) is created, which will hold the
+    surface temperatures (the first index of each returned temperature array).
+    
+    A "for" loop is created for each index and value of the atmospheric
+    layer array. For each of these, the function solves for the temperature
+    using the "energybal" function and puts the results into the empty "temps"
+    array. The surface temperature is determined from the temperature array
+    by taking the first index of each temperature array.
+    
+    The resulting plot shows a plot of number of atmospheric layers vs 
+    temperature. Two red dashed red lines are shown: one to include where the 
+    surface temperature of Venus is 700 K, and the other (iteratively) chosen
+    at nlayer = 30 (the corresponding number of layers for this surface temp). 
     '''
     #should just repeat q3exp2() but with new So and e values
     #and find altitude where Ts = 700
@@ -180,16 +193,47 @@ def q4exp():
 
 def nuclear_winter(e=0.5, eg=1, So = 1350, nlayers = 5, a = 0.33):
     '''
-    This function is created to examine a nuclear winter scenario.
+    This function is created to examine a nuclear winter scenario (Question 5). 
     
-    See the 'energybal' docstring. The only difference between these two
-    functions is that the nuclear_winter function assumes that the topmost
-    layer of the atmosphere absorbs all incoming solar flux (none reaches ground).
-    To account for this difference, rather than setting the first element of 
-    the "b" array to be equal to -S (as it is in the energybal model), the -S
-    value is instead set for the last index of the "b" array.
+    This function creates a matrix (A) to model flux at each
+    atmospheric layer in terms of emissivities. The function populates the
+    matrix using the physical intuition/logic that was derived in class-- this
+    is where the "for" loops are implemented. 
     
-    Additionally, the emissivity (e) value is set to 0.5.
+    Using linear algebra (Ax = b) where A is a matrix of fluxes in terms of
+    emissivities and b is a vector representing the sum of each component, we
+    can solve for x (the vector that represents the flux at each layer). 
+    
+    In contrast to the 'energybal' function, this model assumes that the 
+    topmost layer of the atmosphere absorbs all incoming solar flux-- none 
+    reaches the ground. To account for this difference, rather than setting the
+    first element of the 'b' array to be equal to -S as it is in the energybal
+    model, the -S value is instead set for the last index of the 'b' array.
+    
+    The fluxes are then converted to different temperatures using the 
+    Stefan-Boltzmann equation. The function returns an array "temps", where
+    each element is the temperature of a different atmospheric layer.
+     Parameters
+    ----------
+    e : float, default = 0.5
+        The value of emissivity.
+    eg : float, default = 1
+        The value of ground emissivity.
+    So : float, default = 1350
+        The value of solar insolation.
+    a : float, default = 0.33.
+        The value of albedo.
+    nlayers : float, default = 4
+        The number of layers being run in the model.
+    debug: Boolean, default = false
+        This is a debugger function-- when it is set to "true", it prints out
+        the values of the A matrix.
+    
+
+    Returns
+    -------
+    temps: float
+        The different temperatures (To, T1, T2, etc) in a vector form.
     '''
     A = np.zeros([nlayers+1, nlayers+1])
     b = np.zeros(nlayers+1)
@@ -224,16 +268,16 @@ def nuclear_winter(e=0.5, eg=1, So = 1350, nlayers = 5, a = 0.33):
 
 def q5_plot():
     '''
-    This is a helper function to create a plot to answer the scenario outlined in
-    Question 5. It plots an altitude profile to determine what the new Earth
+    This is a helper function to create a plot to answer the scenario outlined 
+    in Question 5. It plots an altitude profile to determine what the new Earth
     surface temperature would be in the nuclear winter scenario. 
     
     '''
-    temps = nuclear_winter(nlayers = 5)
+    temps = nuclear_winter(e = 0.5, nlayers = 5)
 
     fig, ax = plt.subplots(1,1)
     plt.plot(temps, np.arange(0,6))
     plt.xlabel('Temperature (K)')
     plt.ylabel('Altitude (by layer)')
     plt.show()
-    #we might need to double-check this one, boys
+
