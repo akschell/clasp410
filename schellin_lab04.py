@@ -14,6 +14,8 @@ t_kanger_warm05 = t_kanger + 0.5
 t_kanger_warm1 = t_kanger + 1
 t_kanger_warm3 = t_kanger + 3
 
+
+
 def sample_init(x):
     '''
     Simple initial boundary condition function.
@@ -122,6 +124,7 @@ def heat_plot(dt = 0.02):
     axes.invert_yaxis()
     plt.xlabel('Time (s)')
     plt.ylabel('Length (m)')
+    plt.title('Wire Temperature')
 
     #set indexing for final year of results
     loc = int(-365/dt)
@@ -135,6 +138,7 @@ def heat_plot(dt = 0.02):
     ax2.invert_yaxis()
     plt.xlabel('Temperature (*C)')
     plt.ylabel('Length (m)')
+    plt.title('Wire Temperature')
 
 def kanger_heat_solve(dt = 10, dx = 1, c2 = 0.0216, xmax = 100, tmax = 100*365, 
                       init = temp_kanger):
@@ -232,6 +236,7 @@ def kanger_plot(dt = 10):
     axes.invert_yaxis()
     plt.xlabel('Time (years)')
     plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     
     #set indexing for final year of results
     loc = int(-365/dt)
@@ -249,7 +254,9 @@ def kanger_plot(dt = 10):
     ax2.invert_yaxis()
     plt.xlabel('Temperature (*C)')
     plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     plt.legend()
+
 def temp_kanger_warm05(t):
     '''
     For an array of times in days, this function returns a time series of 
@@ -259,7 +266,6 @@ def temp_kanger_warm05(t):
     '''
     t_amp = (t_kanger_warm05 - t_kanger_warm05.mean()).max()
     return t_amp*np.sin(np.pi/180 * t - np.pi/2) + t_kanger_warm05.mean()
-
 def kanger_plot_warm05(dt = 10):
     '''
     This function (using a default float "dt" value of 10) plots the 
@@ -285,6 +291,9 @@ def kanger_plot_warm05(dt = 10):
     map = axes.pcolor(time/365, x, heat, cmap ='seismic', vmin=-25, vmax=25)
     plt.colorbar(map, ax = axes, label = 'Temperature ($C$)')
     axes.invert_yaxis()
+    plt.xlabel('Time (years)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     
     #set indexing for final year of results
     loc = int(-365/dt)
@@ -300,6 +309,10 @@ def kanger_plot_warm05(dt = 10):
     plt.xlim(-8,2)
     plt.ylim(0,70)
     ax2.invert_yaxis()
+    plt.xlabel('Temperature (*C)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
+    plt.legend()
 
 def temp_kanger_warm1(t):
     '''
@@ -311,7 +324,7 @@ def temp_kanger_warm1(t):
     t_amp = (t_kanger_warm1 - t_kanger_warm1.mean()).max()
     return t_amp*np.sin(np.pi/180 * t - np.pi/2) + t_kanger_warm1.mean()
 def kanger_plot_warm1(dt =10):
-     '''
+    '''
     This function (using a default float "dt" value of 10) plots the 
     results of the kanger_heat_solve equation. This uses the scenario where
     Kangerlussaq, Greenland has been warmed by 1 degrees Celsius.
@@ -335,6 +348,9 @@ def kanger_plot_warm1(dt =10):
     map = axes.pcolor(time/365, x, heat, cmap ='seismic', vmin=-25, vmax=25)
     plt.colorbar(map, ax = axes, label = 'Temperature ($C$)')
     axes.invert_yaxis()
+    plt.xlabel('Time (years)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     
     #set indexing for final year of results
     loc = int(-365/dt)
@@ -350,6 +366,10 @@ def kanger_plot_warm1(dt =10):
     plt.xlim(-8,2)
     plt.ylim(0,70)
     ax2.invert_yaxis()
+    plt.xlabel('Temperature (*C)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
+    plt.legend()
 
 def temp_kanger_warm3(t):
     '''
@@ -361,7 +381,7 @@ def temp_kanger_warm3(t):
     t_amp = (t_kanger_warm3 - t_kanger_warm3.mean()).max()
     return t_amp*np.sin(np.pi/180 * t - np.pi/2) + t_kanger_warm3.mean()
 def kanger_plot_warm3(dt =10):
-     '''
+    '''
     This function (using a default float "dt" value of 10) plots the 
     results of the kanger_heat_solve equation. This uses the scenario where
     Kangerlussaq, Greenland has been warmed by 0.5 degrees Celsius.
@@ -385,6 +405,9 @@ def kanger_plot_warm3(dt =10):
     map = axes.pcolor(time/365, x, heat, cmap ='seismic', vmin=-25, vmax=25)
     plt.colorbar(map, ax = axes, label = 'Temperature ($C$)')
     axes.invert_yaxis()
+    plt.xlabel('Time (years)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     
     #set indexing for final year of results
     loc = int(-365/dt)
@@ -400,6 +423,9 @@ def kanger_plot_warm3(dt =10):
     plt.xlim(-8,2)
     plt.ylim(0,70)
     ax2.invert_yaxis()
+    plt.xlabel('Temperature (*C)')
+    plt.ylabel('Depth (m)')
+    plt.title('Ground Temperature: Kangerlussuaq, Greenland')
+    plt.legend()
     
-    
-    
+kanger_plot()
