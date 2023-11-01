@@ -114,7 +114,22 @@ def heat_plot(dt = 0.02):
     '''
     #Get soln using solver
     x, time, heat = heat_solve()
-    
+
+    # Expected solution
+    solution = np.array([
+    [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000],
+    [0.640000, 0.480000, 0.400000, 0.320000, 0.260000, 0.210000, 0.170000, 0.137500, 0.111250, 0.090000, 0.072812],
+    [0.960000, 0.800000, 0.640000, 0.520000, 0.420000, 0.340000, 0.275000, 0.222500, 0.180000, 0.145625, 0.117813],
+    [0.960000, 0.800000, 0.640000, 0.520000, 0.420000, 0.340000, 0.275000, 0.222500, 0.180000, 0.145625, 0.117813],
+    [0.640000, 0.480000, 0.400000, 0.320000, 0.260000, 0.210000, 0.170000, 0.137500, 0.111250, 0.090000, 0.072812],
+    [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000]])
+
+    # Check solution against lab solution
+    if np.array_equal(np.round(heat,2),np.round(solution,2)):
+        print('Verification successful!')
+    else:
+        print('Verification failed')
+
     #Create a figure/axes object
     fig, axes = plt.subplots(1,1)
     
@@ -139,6 +154,7 @@ def heat_plot(dt = 0.02):
     plt.xlabel('Temperature (*C)')
     plt.ylabel('Length (m)')
     plt.title('Wire Temperature')
+    plt.grid() # Add gridlines
 
 def kanger_heat_solve(dt = 10, dx = 1, c2 = 0.0216, xmax = 100, tmax = 100*365, 
                       init = temp_kanger):
