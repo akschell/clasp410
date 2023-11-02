@@ -272,6 +272,7 @@ def kanger_plot(dt = 10):
     plt.ylabel('Depth (m)')
     plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     plt.legend()
+    plt.grid() # Add gridlines
 
 def temp_kanger_warm05(t):
     '''
@@ -329,6 +330,7 @@ def kanger_plot_warm05(dt = 10):
     plt.ylabel('Depth (m)')
     plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     plt.legend()
+    plt.grid() # Add gridlines
 
 def temp_kanger_warm1(t):
     '''
@@ -386,6 +388,7 @@ def kanger_plot_warm1(dt =10):
     plt.ylabel('Depth (m)')
     plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     plt.legend()
+    plt.grid() # Add gridlines
 
 def temp_kanger_warm3(t):
     '''
@@ -443,5 +446,6 @@ def kanger_plot_warm3(dt =10):
     plt.ylabel('Depth (m)')
     plt.title('Ground Temperature: Kangerlussuaq, Greenland')
     plt.legend()
+    plt.grid() # Add gridlines
     
 kanger_plot()
